@@ -174,9 +174,7 @@ export default function Table() {
 
   return (
     <div className="ag-theme-alpine" style={{ height: "250px", width: "100%" }}>
-      <button className="button_1" onClick={onButtonClick}>
-        Get Data
-      </button>
+     
       <button className="button_1" onClick={addItems}>
         Add Row{" "}
       </button>
