@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { Component, useRef, useState } from "react";
 import { render } from "react-dom";
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./Table.css";
+import { ClientSideRowModelModule } from "ag-grid-community";
+
 import BtnCellRenderer from "./BtnCellRenderer";
 import { AllCommunityModules } from "ag-grid-react";
 
@@ -18,6 +20,19 @@ function GenderDropDown(props) {
         <option value="male"> Male </option>
         <option value="female"> Female </option>
       </select>
+    </div>
+  );
+}
+
+function DeleteButton() {
+  return (
+    <div>
+      <button className="action-button delete" data-action="delete">
+        <img
+          src="https://cdn.iconscout.com/icon/premium/png-256-thumb/delete-1432400-1211078.png"
+          style={{ height: "25px", width: "25px" }}
+        ></img>
+      </button>
     </div>
   );
 }
@@ -42,7 +57,7 @@ export default function Table() {
     {
       id: "1",
       name: "jad",
-      email: "jfdsk",
+      email: "sgunasjkf@gmail.com",
       gender: "Male",
       DOB: "02/10/1998",
       country: "India",
@@ -51,7 +66,7 @@ export default function Table() {
     {
       id: "2",
       name: "asdfkl",
-      email: "jfdsk",
+      email: "sgunasjkf@gmail.com",
       gender: "Female",
       DOB: "02/10/1998",
       country: "USA",
@@ -60,7 +75,7 @@ export default function Table() {
     {
       id: "3",
       name: "vzc",
-      email: "jfdsk",
+      email: "sgunasjkf@gmail.com",
       gender: "Male",
       DOB: "02/10/1998",
       country: "INDIA",
@@ -140,6 +155,16 @@ export default function Table() {
     gridApi.setRowData(selectedRowData);
   };
 
+  function onCellClicked(params) {
+    console.log(params.event.target.dataset.action);
+    // Handle click event for action cells
+    if (params.column.colId === "action") {
+      params.api.applyTransaction({
+        remove: [params.node.data],
+      });
+    }
+  }
+
   return (
     <div className="ag-theme-alpine" style={{ height: "250px", width: "100%" }}>
       <button className="button_1" onClick={onButtonClick}>
@@ -163,8 +188,12 @@ export default function Table() {
         frameworkComponents={{
           GenderDropDown: GenderDropDown,
           CountryDropDown: CountryDropDown,
-          buttonRender: BtnCellRenderer,
+          DeleteButton: DeleteButton,
         }}
+        modules={ClientSideRowModelModule}
+        onCellClicked={onCellClicked}
+        editType="fullRow"
+        suppressClickEdit={true}
         modules={AllCommunityModules}
         defaultColDef={defaultColDef}
         // sideBar={"filters"}
@@ -188,9 +217,9 @@ export default function Table() {
         <AgGridColumn field="country" cellRenderer="CountryDropDown" />
         <AgGridColumn field="city" />
         <AgGridColumn
-          field=""
+          field="action"
           editable={false}
-          cellRenderer="buttonRender"
+          cellRenderer="DeleteButton"
         />
       </AgGridReact>
       <br />
