@@ -169,18 +169,8 @@ export default function Table() {
   }
 
   const genderChange = (gender) => {
-    console.log("Gender Change", gender)
-  }
-
-  function ongenderClicked(params) {
-    console.log(params);
-    // Handle click event for action cells
-    // if (params.column.colId === "action") {
-    //   params.api.applyTransaction({
-    //     remove: [params.node.data],
-    //   });
-    // }
-  }
+    console.log("Gender Change", gender);
+  };
 
   return (
     <div className="ag-theme-alpine" style={{ height: "250px", width: "100%" }}>
@@ -224,6 +214,8 @@ export default function Table() {
           field="gender"
           editable={true}
           cellRenderer="GenderDropDown"
+          cellEditor="GenderDropDown"
+          cellRendererParams={genderChange}
         />
         <AgGridColumn
           field="DOB"
@@ -237,7 +229,6 @@ export default function Table() {
           field="action"
           editable={false}
           cellRenderer="DeleteButton"
-          cellRendererParams={genderChange}
         />
       </AgGridReact>
       <br />
