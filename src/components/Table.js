@@ -13,10 +13,14 @@ import { AllCommunityModules } from "ag-grid-react";
 import NewTable from "./NewTable";
 
 function GenderDropDown(props) {
-  const [gender, setgender] = useState(props.value);
+  console.log(props);
+  const [gender, setgender] = useState();
+  const genderChange = (e) => {
+    setgender(e.target.value);
+  };
   return (
     <div>
-      <select value={gender}>
+      <select value={gender} onChange={genderChange}>
         <option value="male"> Male </option>
         <option value="female"> Female </option>
       </select>
@@ -58,7 +62,7 @@ export default function Table() {
       id: "1",
       name: "jad",
       email: "sgunasjkf@gmail.com",
-      gender: "Male",
+      gender: "",
       DOB: "02/10/1998",
       country: "India",
       city: "kfs",
@@ -67,7 +71,7 @@ export default function Table() {
       id: "2",
       name: "asdfkl",
       email: "sgunasjkf@gmail.com",
-      gender: "Female",
+      gender: "",
       DOB: "02/10/1998",
       country: "USA",
       city: "kfs",
@@ -76,7 +80,7 @@ export default function Table() {
       id: "3",
       name: "vzc",
       email: "sgunasjkf@gmail.com",
-      gender: "Male",
+      gender: "",
       DOB: "02/10/1998",
       country: "INDIA",
       city: "kfs",
@@ -113,7 +117,6 @@ export default function Table() {
     },
   };
 
-  var newCount = 1;
   function createNewRowData() {
     var newData = {
       id: "",
@@ -124,7 +127,6 @@ export default function Table() {
       country: "",
       city: "",
     };
-    newCount++;
     return newData;
   }
 
@@ -156,13 +158,28 @@ export default function Table() {
   };
 
   function onCellClicked(params) {
-    console.log(params.event.target.dataset.action);
     // Handle click event for action cells
+    // console.log(params);
+
     if (params.column.colId === "action") {
       params.api.applyTransaction({
         remove: [params.node.data],
       });
     }
+  }
+
+  const genderChange = (gender) => {
+    console.log("Gender Change", gender)
+  }
+
+  function ongenderClicked(params) {
+    console.log(params);
+    // Handle click event for action cells
+    // if (params.column.colId === "action") {
+    //   params.api.applyTransaction({
+    //     remove: [params.node.data],
+    //   });
+    // }
   }
 
   return (
@@ -220,6 +237,7 @@ export default function Table() {
           field="action"
           editable={false}
           cellRenderer="DeleteButton"
+          cellRendererParams={genderChange}
         />
       </AgGridReact>
       <br />
