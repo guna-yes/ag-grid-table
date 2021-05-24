@@ -1,14 +1,12 @@
-import React, { Component, useRef, useState } from "react";
-import { render } from "react-dom";
-import { AgGridReact, AgGridColumn } from "ag-grid-react";
-import "ag-grid-enterprise";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+// 'use strict';
+import React, {  useRef, useState } from "react";
+import { AgGridReact, AgGridColumn } from 'ag-grid-react';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import "./Table.css";
 import { ClientSideRowModelModule } from "ag-grid-community";
-
-import BtnCellRenderer from "./BtnCellRenderer";
-import { AllCommunityModules } from "ag-grid-react";
+import $ from "jquery";
 
 import NewTable from "./NewTable";
 
@@ -52,6 +50,31 @@ function CountryDropDown(props) {
   );
 }
 
+function getDatePicker() {
+  function Datepicker() {}
+  Datepicker.prototype.init = function (params) {
+    this.eInput = document.createElement('input');
+    this.eInput.value = params.value;
+    this.eInput.classList.add('ag-input');
+    this.eInput.style.height = '100%';
+    $(this.eInput).datepicker({ dateFormat: 'dd/mm/yy' });
+  };
+  Datepicker.prototype.getGui = function () {
+    return this.eInput;
+  };
+  Datepicker.prototype.afterGuiAttached = function () {
+    this.eInput.focus();
+    this.eInput.select();
+  };
+  Datepicker.prototype.getValue = function () {
+    return this.eInput.value;
+  };
+  Datepicker.prototype.destroy = function () {};
+  Datepicker.prototype.isPopup = function () {
+    return false;
+  };
+  return Datepicker;
+}
 export default function Table() {
   const [newData, setnewData] = useState([]);
   const gridRef = useRef(null);
@@ -194,12 +217,14 @@ export default function Table() {
           GenderDropDown: GenderDropDown,
           CountryDropDown: CountryDropDown,
           DeleteButton: DeleteButton,
+          // datePicker: getDatePicker
         }}
+        components={{ datePicker: getDatePicker() }}
         modules={ClientSideRowModelModule}
         onCellClicked={onCellClicked}
-        editType="fullRow"
-        suppressClickEdit={true}
-        modules={AllCommunityModules}
+        // editType="fullRow"
+        // suppressClickEdit={true}
+        // modules={AllCommunityModules}
         defaultColDef={defaultColDef}
         // sideBar={"filters"}
         rowSelection="multiple"
@@ -217,6 +242,8 @@ export default function Table() {
         />
         <AgGridColumn
           field="DOB"
+          editable={true} 
+          cellEditor="datePicker"
           minWidth={190}
           filter="agDateColumnFilter"
           filterParams={filterParams}
