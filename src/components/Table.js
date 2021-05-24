@@ -7,6 +7,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./Table.css";
 import { ClientSideRowModelModule } from "ag-grid-community";
 import $ from "jquery";
+import 'jquery-ui/ui/widgets/datepicker';
 import GenderCellRenderer from "./GenderCellRenderer.js";
 import NewTable from "./NewTable";
 
@@ -193,6 +194,7 @@ export default function Table() {
       <button className="button_1" onClick={onButtonClick}>
         Submit{" "}
       </button>
+     
 
       <AgGridReact
         ref={gridRef}
@@ -246,6 +248,7 @@ export default function Table() {
         <AgGridColumn
           field="action"
           editable={false}
+          floatingFilter={false}
           cellRenderer="DeleteButton"
         />
       </AgGridReact>

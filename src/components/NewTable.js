@@ -8,6 +8,7 @@ import "./Table.css";
 export default function NewTable(props) {
   const gridRef = useRef(null);
 
+
   const [rowData, setrowData] = useState([]);
 
   useEffect(() => {
@@ -33,6 +34,12 @@ export default function NewTable(props) {
         <AgGridColumn field="country" />
         <AgGridColumn field="city" />
       </AgGridReact>
+      <div
+        className="footer"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+     @assignment done by Settivaripalli Gunasekhar
+    </div>
     </div>
   );
 }

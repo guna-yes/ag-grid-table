@@ -11,7 +11,6 @@ function App() {
     <div className="App" style={{ margin: "4em" }}>
       <h1>Top Rankers Assignments</h1>
       <Table />
-     
     </div>
   );
 }
