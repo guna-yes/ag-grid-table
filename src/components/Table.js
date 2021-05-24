@@ -7,7 +7,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./Table.css";
 import { ClientSideRowModelModule } from "ag-grid-community";
 import $ from "jquery";
-import 'jquery-ui/ui/widgets/datepicker';
+import "jquery-ui/ui/widgets/datepicker";
 import GenderCellRenderer from "./GenderCellRenderer.js";
 import NewTable from "./NewTable";
 
@@ -20,17 +20,6 @@ function DeleteButton() {
           style={{ height: "25px", width: "25px" }}
         ></img>
       </button>
-    </div>
-  );
-}
-
-function CountryDropDown(props) {
-  return (
-    <div>
-      <select>
-        <option value="India"> India </option>
-        <option value="USA"> USA </option>
-      </select>
     </div>
   );
 }
@@ -68,30 +57,30 @@ export default function Table() {
   const rowData = [
     {
       id: "1",
-      name: "jad",
-      email: "sgunasjkf@gmail.com",
+      name: "John Snow",
+      email: "john@gmail.com",
       gender: "Male",
       DOB: "02/10/1998",
       country: "India",
-      city: "kfs",
+      city: "WinterFell",
     },
     {
       id: "2",
-      name: "asdfkl",
-      email: "sgunasjkf@gmail.com",
+      name: "Arya",
+      email: "aarya@gmail.com",
       gender: "Female",
       DOB: "02/10/1998",
       country: "USA",
-      city: "kfs",
+      city: "Bravos",
     },
     {
       id: "3",
-      name: "vzc",
-      email: "sgunasjkf@gmail.com",
+      name: "Tyrion",
+      email: "tyrion@gmail.com",
       gender: "Male",
       DOB: "02/10/1998",
       country: "Australia",
-      city: "kfs",
+      city: "Kings Landing",
     },
   ];
 
@@ -102,6 +91,8 @@ export default function Table() {
     filter: true,
     floatingFilter: true,
     resizable: true,
+    singleClickEdit: true,
+
     flex: 1,
   };
   const filterParams = {
@@ -127,13 +118,13 @@ export default function Table() {
 
   function createNewRowData() {
     var newData = {
-      id: "",
-      name: "",
-      email: "",
-      gender: "Select",
-      DOB: "Pick",
-      country: "Select",
-      city: "",
+      id: "id",
+      name: "Name",
+      email: "Email",
+      gender: "Gender",
+      DOB: "DOB",
+      country: "Country",
+      city: "City",
     };
     return newData;
   }
@@ -166,19 +157,12 @@ export default function Table() {
   };
 
   function onCellClicked(params) {
-    // Handle click event for action cells
-    // console.log(params);
-
     if (params.column.colId === "action") {
       params.api.applyTransaction({
         remove: [params.node.data],
       });
     }
   }
-
-  const genderChange = (gender) => {
-    console.log("Gender Change", gender);
-  };
 
   return (
     <div className="ag-theme-alpine" style={{ height: "350px", width: "100%" }}>
@@ -194,16 +178,15 @@ export default function Table() {
       <button className="button_1" onClick={onButtonClick}>
         Submit{" "}
       </button>
-     
 
       <AgGridReact
+      style={{color: "red"}}
         ref={gridRef}
         rowData={rowData}
+        enableBrowserTooltips={true}
         frameworkComponents={{
           genderCellRenderer: GenderCellRenderer,
-          CountryDropDown: CountryDropDown,
           DeleteButton: DeleteButton,
-          // datePicker: getDatePicker
         }}
         components={{ datePicker: getDatePicker() }}
         modules={ClientSideRowModelModule}
@@ -212,10 +195,11 @@ export default function Table() {
         rowSelection="multiple"
         onGridReady={onGridReady}
       >
-        <AgGridColumn field="id" checkboxSelection={true} />
-        <AgGridColumn field="name" editable={true} />
-        <AgGridColumn field="email" editable={true} />
+        <AgGridColumn field="id" checkboxSelection={true} tooltipField="id" />
+        <AgGridColumn field="name" editable={true} tooltipField="name" />
+        <AgGridColumn field="email" editable={true} tooltipField="email" />
         <AgGridColumn
+          tooltipField="gender"
           field="gender"
           editable={true}
           singleClickEdit={true}
@@ -227,6 +211,7 @@ export default function Table() {
           }}
         />
         <AgGridColumn
+          tooltipField="DOB"
           field="DOB"
           singleClickEdit={true}
           editable={true}
@@ -235,6 +220,7 @@ export default function Table() {
           filterParams={filterParams}
         />
         <AgGridColumn
+          tooltipField="country"
           field="country"
           editable={true}
           cellEditor="agSelectCellEditor"

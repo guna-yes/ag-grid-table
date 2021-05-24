@@ -24,8 +24,9 @@ export default function NewTable(props) {
         ref={gridRef}
         rowData={rowData}
         defaultColDef={defaultColDef}
+        enableBrowserTooltips={true}
       >
-        <AgGridColumn field="id" />
+        <AgGridColumn field="id"  tooltipField="id" />
         <AgGridColumn field="name" />
         <AgGridColumn field="email" />
         <AgGridColumn field="gender" />
