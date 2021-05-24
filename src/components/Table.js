@@ -10,22 +10,6 @@ import $ from "jquery";
 import GenderCellRenderer from "./GenderCellRenderer.js";
 import NewTable from "./NewTable";
 
-function GenderDropDown(props) {
-  console.log(props);
-  const [gender, setgender] = useState();
-  const genderChange = (e) => {
-    setgender(e.target.value);
-  };
-  return (
-    <div>
-      <select value={gender} onChange={genderChange}>
-        <option value="male"> Male </option>
-        <option value="female"> Female </option>
-      </select>
-    </div>
-  );
-}
-
 function DeleteButton() {
   return (
     <div>
@@ -217,7 +201,6 @@ export default function Table() {
           genderCellRenderer: GenderCellRenderer,
           CountryDropDown: CountryDropDown,
           DeleteButton: DeleteButton,
-          genderdropRenderer: GenderDropDown,
           // datePicker: getDatePicker
         }}
         components={{ datePicker: getDatePicker() }}
@@ -228,12 +211,13 @@ export default function Table() {
         onGridReady={onGridReady}
       >
         <AgGridColumn field="id" checkboxSelection={true} />
-        <AgGridColumn field="name" />
-        <AgGridColumn field="email" />
+        <AgGridColumn field="name" editable={true} />
+        <AgGridColumn field="email" editable={true} />
         <AgGridColumn
           field="gender"
           editable={true}
-           cellRenderer="genderCellRenderer"
+          singleClickEdit={true}
+          cellRenderer="genderCellRenderer"
           cellEditor="agSelectCellEditor"
           cellEditorParams={{
             values: ["Male", "Female"],
@@ -242,19 +226,23 @@ export default function Table() {
         />
         <AgGridColumn
           field="DOB"
+          singleClickEdit={true}
           editable={true}
           cellEditor="datePicker"
-          minWidth={190}
           filter="agDateColumnFilter"
           filterParams={filterParams}
         />
-        <AgGridColumn field="country"  editable={true}
+        <AgGridColumn
+          field="country"
+          editable={true}
           cellEditor="agSelectCellEditor"
+          singleClickEdit={true}
           cellEditorParams={{
-            values: ["USA", "India","Australia"],
+            values: ["USA", "India", "Australia"],
             cellEditor: "agSelectCellEditor",
-          }} />
-        <AgGridColumn field="city" />
+          }}
+        />
+        <AgGridColumn field="city" editable={true} />
         <AgGridColumn
           field="action"
           editable={false}
