@@ -1,13 +1,13 @@
 // 'use strict';
-import React, {  useRef, useState } from "react";
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import React, { useRef, useState } from "react";
+import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import "ag-grid-enterprise";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import "./Table.css";
 import { ClientSideRowModelModule } from "ag-grid-community";
 import $ from "jquery";
-
+import GenderCellRenderer from "./GenderCellRenderer.js";
 import NewTable from "./NewTable";
 
 function GenderDropDown(props) {
@@ -53,11 +53,11 @@ function CountryDropDown(props) {
 function getDatePicker() {
   function Datepicker() {}
   Datepicker.prototype.init = function (params) {
-    this.eInput = document.createElement('input');
+    this.eInput = document.createElement("input");
     this.eInput.value = params.value;
-    this.eInput.classList.add('ag-input');
-    this.eInput.style.height = '100%';
-    $(this.eInput).datepicker({ dateFormat: 'dd/mm/yy' });
+    this.eInput.classList.add("ag-input");
+    this.eInput.style.height = "100%";
+    $(this.eInput).datepicker({ dateFormat: "dd/mm/yy" });
   };
   Datepicker.prototype.getGui = function () {
     return this.eInput;
@@ -85,7 +85,7 @@ export default function Table() {
       id: "1",
       name: "jad",
       email: "sgunasjkf@gmail.com",
-      gender: "",
+      gender: "Male",
       DOB: "02/10/1998",
       country: "India",
       city: "kfs",
@@ -94,7 +94,7 @@ export default function Table() {
       id: "2",
       name: "asdfkl",
       email: "sgunasjkf@gmail.com",
-      gender: "",
+      gender: "Female",
       DOB: "02/10/1998",
       country: "USA",
       city: "kfs",
@@ -103,9 +103,9 @@ export default function Table() {
       id: "3",
       name: "vzc",
       email: "sgunasjkf@gmail.com",
-      gender: "",
+      gender: "Male",
       DOB: "02/10/1998",
-      country: "INDIA",
+      country: "Australia",
       city: "kfs",
     },
   ];
@@ -145,9 +145,9 @@ export default function Table() {
       id: "",
       name: "",
       email: "",
-      gender: "",
-      DOB: "",
-      country: "",
+      gender: "Select",
+      DOB: "Pick",
+      country: "Select",
       city: "",
     };
     return newData;
@@ -196,8 +196,7 @@ export default function Table() {
   };
 
   return (
-    <div className="ag-theme-alpine" style={{ height: "250px", width: "100%" }}>
-     
+    <div className="ag-theme-alpine" style={{ height: "350px", width: "100%" }}>
       <button className="button_1" onClick={addItems}>
         Add Row{" "}
       </button>
@@ -210,23 +209,21 @@ export default function Table() {
       <button className="button_1" onClick={onButtonClick}>
         Submit{" "}
       </button>
+
       <AgGridReact
         ref={gridRef}
         rowData={rowData}
         frameworkComponents={{
-          GenderDropDown: GenderDropDown,
+          genderCellRenderer: GenderCellRenderer,
           CountryDropDown: CountryDropDown,
           DeleteButton: DeleteButton,
+          genderdropRenderer: GenderDropDown,
           // datePicker: getDatePicker
         }}
         components={{ datePicker: getDatePicker() }}
         modules={ClientSideRowModelModule}
         onCellClicked={onCellClicked}
-        // editType="fullRow"
-        // suppressClickEdit={true}
-        // modules={AllCommunityModules}
         defaultColDef={defaultColDef}
-        // sideBar={"filters"}
         rowSelection="multiple"
         onGridReady={onGridReady}
       >
@@ -236,19 +233,27 @@ export default function Table() {
         <AgGridColumn
           field="gender"
           editable={true}
-          cellRenderer="GenderDropDown"
-          cellEditor="GenderDropDown"
-          cellRendererParams={genderChange}
+           cellRenderer="genderCellRenderer"
+          cellEditor="agSelectCellEditor"
+          cellEditorParams={{
+            values: ["Male", "Female"],
+            cellEditor: "genderCellRenderer",
+          }}
         />
         <AgGridColumn
           field="DOB"
-          editable={true} 
+          editable={true}
           cellEditor="datePicker"
           minWidth={190}
           filter="agDateColumnFilter"
           filterParams={filterParams}
         />
-        <AgGridColumn field="country" cellRenderer="CountryDropDown" />
+        <AgGridColumn field="country"  editable={true}
+          cellEditor="agSelectCellEditor"
+          cellEditorParams={{
+            values: ["USA", "India","Australia"],
+            cellEditor: "agSelectCellEditor",
+          }} />
         <AgGridColumn field="city" />
         <AgGridColumn
           field="action"
