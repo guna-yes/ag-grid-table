@@ -88,13 +88,9 @@ export default function Table() {
   const defaultColDef = {
     sortable: true,
     editable: true,
-    resizable: true,
     filter: true,
     floatingFilter: true,
-    resizable: true,
     singleClickEdit: true,
-
-    flex: 1,
   };
   const filterParams = {
     comparator: (filterLocalDateAtMidnight, cellValue) => {
@@ -164,86 +160,102 @@ export default function Table() {
       });
     }
   }
+  const onFirstDataRendered = (params) => {
+    params.api.sizeColumnsToFit();
+  };
 
   return (
-    <div className="ag-theme-alpine" style={{ height: "350px", width: "100%" }}>
-      <button className="button_1" onClick={addItems}>
-        Add Row{" "}
-      </button>
-      <button className="button_1" onClick={onRemoveSelected}>
-        Delete selected Row
-      </button>
-      <button className="button_1" onClick={onRemoveNonSelected}>
-        Delete Non Selected Row{" "}
-      </button>
-      <button className="button_1" onClick={onButtonClick}>
-        Submit{" "}
-      </button>
-
-      <AgGridReact
-      style={{color: "red"}}
-        ref={gridRef}
-        rowData={rowData}
-        enableBrowserTooltips={true}
-        frameworkComponents={{
-          genderCellRenderer: GenderCellRenderer,
-          DeleteButton: DeleteButton,
-        }}
-        components={{ datePicker: getDatePicker() }}
-        modules={ClientSideRowModelModule}
-        onCellClicked={onCellClicked}
-        defaultColDef={defaultColDef}
-        rowSelection="multiple"
-        onGridReady={onGridReady}
+    <div style={{ width: "100%", height: "30%" }}>
+      <div
+        id="myGrid"
+        style={{ width: "100%", height: "100%" }}
+        className="ag-theme-alpine"
       >
-        <AgGridColumn field="id" checkboxSelection={true} tooltipField="id" />
-        <AgGridColumn field="name" editable={true} tooltipField="name" />
-        <AgGridColumn field="email" editable={true} tooltipField="email" />
-        <AgGridColumn
-          tooltipField="gender"
-          field="gender"
-          editable={true}
-          singleClickEdit={true}
-          cellRenderer="genderCellRenderer"
-          cellEditor="agSelectCellEditor"
-          cellEditorParams={{
-            values: ["Male", "Female"],
-            cellEditor: "genderCellRenderer",
+        <button className="button_1" onClick={addItems}>
+          Add Row{" "}
+        </button>
+        <button className="button_1" onClick={onRemoveSelected}>
+          Delete selected Row
+        </button>
+        <button className="button_1" onClick={onRemoveNonSelected}>
+          Delete Non Selected Row{" "}
+        </button>
+        <button className="button_1" onClick={onButtonClick}>
+          Submit{" "}
+        </button>
+
+        <AgGridReact
+          onFirstDataRendered={onFirstDataRendered}
+          style={{ color: "red" }}
+          ref={gridRef}
+          rowData={rowData}
+          resizable={true}
+          enableBrowserTooltips={true}
+          frameworkComponents={{
+            genderCellRenderer: GenderCellRenderer,
+            DeleteButton: DeleteButton,
           }}
-        />
-        <AgGridColumn
-          tooltipField="DOB"
-          field="DOB"
-          singleClickEdit={true}
-          editable={true}
-          cellEditor="datePicker"
-          filter="agDateColumnFilter"
-          filterParams={filterParams}
-        />
-        <AgGridColumn
-          tooltipField="country"
-          field="country"
-          editable={true}
-          cellEditor="agSelectCellEditor"
-          singleClickEdit={true}
-          cellEditorParams={{
-            values: ["USA", "India", "Australia"],
-            cellEditor: "agSelectCellEditor",
-          }}
-        />
-        <AgGridColumn field="city" editable={true} />
-        <AgGridColumn
-          field="action"
-          editable={false}
-          floatingFilter={false}
-          cellRenderer="DeleteButton"
-        />
-      </AgGridReact>
-      <br />
-      <br />
-      <h1>Submitted Data</h1>
-      <br />
-      <NewTable newData={newData} />
+          components={{ datePicker: getDatePicker() }}
+          modules={ClientSideRowModelModule}
+          onCellClicked={onCellClicked}
+          defaultColDef={defaultColDef}
+          rowSelection="multiple"
+          onGridReady={onGridReady}
+        >
+          <AgGridColumn field="id" checkboxSelection={true} tooltipField="id" />
+          <AgGridColumn
+            field="name"
+            suppressSizeToFit={true}
+            editable={true}
+            tooltipField="name"
+          />
+          <AgGridColumn field="email" editable={true} tooltipField="email" />
+          <AgGridColumn
+            tooltipField="gender"
+            field="gender"
+            editable={true}
+            singleClickEdit={true}
+            cellRenderer="genderCellRenderer"
+            cellEditor="agSelectCellEditor"
+            cellEditorParams={{
+              values: ["Male", "Female"],
+              cellEditor: "genderCellRenderer",
+            }}
+          />
+          <AgGridColumn
+            tooltipField="DOB"
+            field="DOB"
+            singleClickEdit={true}
+            editable={true}
+            cellEditor="datePicker"
+            filter="agDateColumnFilter"
+            filterParams={filterParams}
+          />
+          <AgGridColumn
+            tooltipField="country"
+            field="country"
+            editable={true}
+            cellEditor="agSelectCellEditor"
+            singleClickEdit={true}
+            cellEditorParams={{
+              values: ["USA", "India", "Australia"],
+              cellEditor: "agSelectCellEditor",
+            }}
+          />
+          <AgGridColumn field="city" editable={true} />
+          <AgGridColumn
+            field="action"
+            editable={false}
+            floatingFilter={false}
+            cellRenderer="DeleteButton"
+          />
+        </AgGridReact>
+        <br />
+        <br />
+        <h1>Submitted Data</h1>
+        <br />
+        <NewTable newData={newData} />
+      </div>
     </div>
   );
 }

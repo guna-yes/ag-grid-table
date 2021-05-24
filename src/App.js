@@ -4,11 +4,10 @@ import Table from "./components/Table";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import NewTable from "./components/NewTable";
 
 function App() {
   return (
-    <div className="App" style={{ margin: "4em" }}>
+    <div className="App" style={{ padding: "1em" }}>
       <h1>Top Rankers Assignments</h1>
       <Table />
     </div>
