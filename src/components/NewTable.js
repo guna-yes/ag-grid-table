@@ -8,7 +8,6 @@ import "./Table.css";
 export default function NewTable(props) {
   const gridRef = useRef(null);
 
-
   const [rowData, setrowData] = useState([]);
 
   useEffect(() => {
@@ -34,12 +33,17 @@ export default function NewTable(props) {
         <AgGridColumn field="country" />
         <AgGridColumn field="city" />
       </AgGridReact>
+      <br />
       <div
         className="footer"
         style={{ display: "flex", justifyContent: "center" }}
       >
-     @assignment done by Settivaripalli Gunasekhar
-    </div>
+        @Assignment done by &nbsp;
+        <strong>
+          <em>Settivaripalli Gunasekhar</em>
+        </strong>
+        <br />
+      </div>
     </div>
   );
 }
