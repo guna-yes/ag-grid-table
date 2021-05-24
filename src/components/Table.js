@@ -165,10 +165,10 @@ export default function Table() {
   };
 
   return (
-    <div style={{ width: "100%", height: "30%" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <div
         id="myGrid"
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "45%" }}
         className="ag-theme-alpine"
       >
         <button className="button_1" onClick={addItems}>
@@ -250,7 +250,6 @@ export default function Table() {
             cellRenderer="DeleteButton"
           />
         </AgGridReact>
-        <br />
         <br />
         <h1>Submitted Data</h1>
         <br />
