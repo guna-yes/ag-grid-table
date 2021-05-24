@@ -49,6 +49,7 @@ function getDatePicker() {
   };
   return Datepicker;
 }
+
 export default function Table() {
   const [newData, setnewData] = useState([]);
   const gridRef = useRef(null);
