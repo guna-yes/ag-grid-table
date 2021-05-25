@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/ag-grid-table/static/css/main.ac23fd9d.chunk.css",
+    "main.js": "/ag-grid-table/static/js/main.849bf6e4.chunk.js",
+    "main.js.map": "/ag-grid-table/static/js/main.849bf6e4.chunk.js.map",
+    "runtime-main.js": "/ag-grid-table/static/js/runtime-main.c43d9535.js",
+    "runtime-main.js.map": "/ag-grid-table/static/js/runtime-main.c43d9535.js.map",
+    "static/css/2.3d5167d2.chunk.css": "/ag-grid-table/static/css/2.3d5167d2.chunk.css",
+    "static/js/2.d4c1291f.chunk.js": "/ag-grid-table/static/js/2.d4c1291f.chunk.js",
+    "static/js/2.d4c1291f.chunk.js.map": "/ag-grid-table/static/js/2.d4c1291f.chunk.js.map",
+    "static/js/3.ec1445e5.chunk.js": "/ag-grid-table/static/js/3.ec1445e5.chunk.js",
+    "static/js/3.ec1445e5.chunk.js.map": "/ag-grid-table/static/js/3.ec1445e5.chunk.js.map",
+    "index.html": "/ag-grid-table/index.html",
+    "static/css/2.3d5167d2.chunk.css.map": "/ag-grid-table/static/css/2.3d5167d2.chunk.css.map",
+    "static/css/main.ac23fd9d.chunk.css.map": "/ag-grid-table/static/css/main.ac23fd9d.chunk.css.map",
+    "static/js/2.d4c1291f.chunk.js.LICENSE.txt": "/ag-grid-table/static/js/2.d4c1291f.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/ag-grid-table/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c43d9535.js",
+    "static/css/2.3d5167d2.chunk.css",
+    "static/js/2.d4c1291f.chunk.js",
+    "static/css/main.ac23fd9d.chunk.css",
+    "static/js/main.849bf6e4.chunk.js"
+  ]
+}
